@@ -44,16 +44,6 @@ spec:
     - name: TAG
       description: Tag of PR to add to image
       type: string
-    - name: SKIP_SBOM_GENERATION
-      description: Skip SBOM-related operations. This will likely cause EC policies to fail if enabled
-      type: string
-      default: "false"
-    - name: SBOM_TYPE
-      description: >-
-        Select the SBOM format to generate. Valid values: spdx, cyclonedx.
-        Note: the SBOM from the prefetch task - if there is one - must be in the same format.
-      type: string
-      default: spdx
     - name: caTrustConfigMapKey
       description: The name of the key in the ConfigMap that contains the
         CA bundle data.

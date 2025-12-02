@@ -121,8 +121,6 @@ This pipeline is pushed as a Tekton bundle to [quay.io](https://quay.io/reposito
 |IMPORT_PATH| import path of package main| .| '$(params.import-path)'|
 |KO_DEFAULTBASEIMAGE| base image for ko build| ""| '$(params.default-base-image)'|
 |KO_DOCKER_REPO| Container repository where to push images built with ko| ""| '$(params.ko-docker-repo)'|
-|SBOM_TYPE| Select the SBOM format to generate. Valid values: spdx, cyclonedx. Note: the SBOM from the prefetch task - if there is one - must be in the same format.| spdx| |
-|SKIP_SBOM_GENERATION| Skip SBOM-related operations. This will likely cause EC policies to fail if enabled| false| |
 |SOURCE_ARTIFACT| The Trusted Artifact URI pointing to the artifact with the application source code.| None| '$(tasks.prefetch-dependencies.results.SOURCE_ARTIFACT)'|
 |TAG| Tag of PR to add to image| None| '$(params.pr-tag)'|
 |caTrustConfigMapKey| The name of the key in the ConfigMap that contains the CA bundle data.| ca-bundle.crt| |
