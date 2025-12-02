@@ -138,7 +138,7 @@ spec:
         [ -n "${COMMIT_SHA}" ] && labels+=",vcs-ref=${COMMIT_SHA}"
         [ -n "${IMAGE_EXPIRES_AFTER}" ] && labels+=",quay.expires-after=${IMAGE_EXPIRES_AFTER})"
 
-        args=("${IMAGE_NAMING_STRATEGY}" -t "${TASKRUN_NAME}" --image-label "${labels}" --sbom spdx --sbom-dir /tmp)
+        args=("${IMAGE_NAMING_STRATEGY}" -t "${TASKRUN_NAME}" --image-label "${labels}" --sbom=none)
         [ -n "${TAG}" ] && args+=(-t "${TAG}")
 
         ko build "${args[@]}" "${IMPORT_PATH}" 2>&1 | tee /tmp/build.log
@@ -146,18 +146,12 @@ spec:
         digest=$(grep Published /tmp/build.log | grep -v SBOM | awk '{print $4}' | awk -F@ '{print $2}')
         url=$(grep Publishing /tmp/build.log | awk '{print $4}')
         ref="${url}@${digest}"
-        sbom_url=$(grep 'Published SBOM' /tmp/build.log | awk '{print $5}')
-        sbom_file=$(grep 'Writing SBOM to' /tmp/build.log | awk '{print $6}')
-
-        cosign attach sbom --type=spdx --input-format=json --sbom="${sbom_file}" "${ref}"
 
         echo "IMAGE_DIGEST=${digest}"
         echo "IMAGE_REF=${ref}"
         echo "IMAGE_URL=${url}"
-        echo "SBOM_BLOB_URL=${sbom_url}"
 
         echo -n "${digest}" >"$(results.IMAGE_DIGEST.path)"
         echo -n "${ref}" >"$(results.IMAGE_REF.path)"
         echo -n "${url}" >"$(results.IMAGE_URL.path)"
-        echo -n "${sbom_url}" >"$(results.SBOM_BLOB_URL.path)"
         echo "Completed."
