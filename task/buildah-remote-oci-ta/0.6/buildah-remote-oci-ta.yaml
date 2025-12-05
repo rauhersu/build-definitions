@@ -1407,7 +1407,7 @@ spec:
       requests:
         cpu: 100m
         memory: 256Mi
-    image: quay.io/konflux-ci/appstudio-utils:latest@sha256:5beab55042923b241f6ce0c653c622c2eefb4fcc46f7e4f04febc499291fcbcd
+    image: quay.io/konflux-ci/appstudio-utils:latest@sha256:502511a2fe5b025a674132ccc0792b1e14c9b06054db4ee9fee9fc4fde594cd0
     name: upload-sbom
     script: |
       #!/bin/bash
